@@ -73,9 +73,9 @@ public class Reading extends Model
 //    }
 
     private static double windSpeedToBeaufort(double windSpeed){
-        public int beaufort;
+        int beaufort = 0;
 
-        if (windSpeed == 1);
+        if (windSpeed == 1)
             beaufort = 0;
         else if ((windSpeed >=1) && (windSpeed <=5))
             beaufort = 1;
