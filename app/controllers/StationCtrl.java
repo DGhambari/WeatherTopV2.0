@@ -5,42 +5,48 @@ import models.Reading;
 
 import play.Logger;
 import play.mvc.Controller;
+import utils.StationAnalytics;
 
-public class StationCtrl extends Controller{
-    public static void index(Long id)
-    {
+public class StationCtrl extends Controller {
+    public static void index(Long id) {
         Station station = Station.findById(id);
-        Logger.info ("Station id = " + id);
+        Logger.info("Station id = " + id);
+
+        Reading lastReading = station.readings.get(station.readings.size()-1);
+        station.latestWeatherCondition = StationAnalytics.weatherCode(lastReading.code);
+
+        station.latestTempC = lastReading.temperature;
+        station.latestTempF = StationAnalytics.celsiusToFahrenheit(lastReading.temperature);
+
+        station.beaufort = StationAnalytics.windSpeedToBeaufort(lastReading.windSpeed);
+
+        station.latestWindSpeed = lastReading.windSpeed;
+        station.latestWindDirection = StationAnalytics.degreesToWindDirection(lastReading.windDirection);
+        station.windChill = StationAnalytics.windChill(station.latestTempC, station.latestWindSpeed);
+
+        station.beaufortLabel = StationAnalytics.beaufortToBeaufortLabel(station.readings.size() - 1);
+        station.latestPressure = lastReading.pressure;
+
         render("station.html", station);
-//        station.latestTempF = ReadingAnalytics.celciusToFahrenheit(station.readings).latestTemperature;
     }
 
-    public static void deleteReading (Long id, Long readingid)
-    {
+    public static void deleteReading(Long id, Long readingid) {
         Station station = Station.findById(id);
         Reading reading = Reading.findById(readingid);
-        Logger.info ("Removing entry" + readingid);
+        Logger.info("Removing entry" + readingid);
         station.readings.remove(reading);
         station.save();
         reading.delete();
-        render("station.html", station);
+        redirect("/station/" + id);
     }
 
-    public static void addReading(Long id, int code, float temperature, float windSpeed, int windDirection, int pressure)
-    {
+    public static void addReading(Long id, int code, double temperature, double windSpeed, int windDirection, int pressure) {
         Station station = Station.findById(id);
         Reading reading = new Reading(code, temperature, windSpeed, windDirection, pressure);
         station.readings.add(reading);
+        Logger.info("Adding a Reading: " + reading.code);
         station.save();
-        redirect ("/stations/" + id);
+        redirect("/station/" + id);
     }
 
-//    public static void addReading(Long id, String date, int code, float temperature, float windSpeed, int windDirection, int pressure)
-//    {
-//        Station station = Station.findById(id);
-//        Reading reading = new Reading(date, code, temperature, windSpeed, windDirection, pressure);
-//        station.readings.add(reading);
-//        station.save();
-//        redirect ("/stations/" + id);
-//    }
 }

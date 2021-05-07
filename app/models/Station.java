@@ -16,18 +16,17 @@ public class Station extends Model
     @OneToMany(cascade = CascadeType.ALL)
     public List<Reading> readings = new ArrayList<Reading>();
     public String latestWeatherCondition;
-    public float latestTempC;
-    public float latestTempF;
-    public int latestWindSpeed;
+    public double latestTempC;
+    public int beaufort;
+    public String beaufortLabel;
+    public double latestTempF;
+    public double latestWindSpeed;
+    public String latestWindDirection;
+    public String windChill;
     public int latestPressure;
 
     public Station(String name){
         this.name = name;
-        this.latestWeatherCondition = latestWeatherCondition;
-        this.latestTempC = latestTempC;
-        this.latestTempF = latestTempF;
-        this.latestWindSpeed = latestWindSpeed;
-        this.latestPressure = latestPressure;
     }
 
     public Station(String name, String latestWeatherCondition, float latestTempC, float latestTempF, int latestWindSpeed, int latestPressure){

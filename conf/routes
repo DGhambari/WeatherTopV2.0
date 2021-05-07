@@ -13,15 +13,16 @@ GET    /logout                                                          Accounts
 
 GET     /dashboard                                                      Dashboard.index
 GET     /dashboard/deletestation/{id}                                   Dashboard.deleteStation
-
 POST    /dashboard/addstation                                           Dashboard.addStation
 
 GET     /about                                                          About.index
 GET     /admin                                                          Admin.index
 GET     /station/{id}                                                   StationCtrl.index
 GET     /station/{id}/deletereading/{readingid}                         StationCtrl.deleteReading
-
-POST    /station/{id}/addreading/                                       StationCtrl.addReading
+POST    /station/{id}/addreading                                        StationCtrl.addReading
+POST    /station/{id}/windSpeedToBeaufort                               StationCtrl.windSpeedToBeaufort
+POST    /station/{id}/beaufortToBeaufortLabel                           StationCtrl.beaufortToBeaufortLabel
+POST    /station/{id}/degreesToWindDirection                            StationCtrl.degreesToWindDirection
 
 # Ignore favicon requests
 GET     /favicon.ico                                                    404
