@@ -3,10 +3,6 @@ package models;
 
 import javax.persistence.Entity;
 import play.db.jpa.Model;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 @Entity
 public class Reading extends Model

@@ -7,25 +7,37 @@ import play.Logger;
 import play.mvc.Controller;
 import utils.StationAnalytics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StationCtrl extends Controller {
     public static void index(Long id) {
         Station station = Station.findById(id);
         Logger.info("Station id = " + id);
+        List<Station> stations = Station.findAll();
 
-        Reading lastReading = station.readings.get(station.readings.size()-1);
-        station.latestWeatherCondition = StationAnalytics.weatherCode(lastReading.code);
+        if(station.readings.size() > 0) {
+            Reading lastReading = station.readings.get(station.readings.size() - 1);
 
-        station.latestTempC = lastReading.temperature;
-        station.latestTempF = StationAnalytics.celsiusToFahrenheit(lastReading.temperature);
+            //  Weather
+            station.latestWeatherCondition = StationAnalytics.weatherCode(lastReading.code);
 
-        station.beaufort = StationAnalytics.windSpeedToBeaufort(lastReading.windSpeed);
+            //  Temp
+            station.latestTempC = lastReading.temperature;
+            station.latestTempF = StationAnalytics.celsiusToFahrenheit(lastReading.temperature);
 
-        station.latestWindSpeed = lastReading.windSpeed;
-        station.latestWindDirection = StationAnalytics.degreesToWindDirection(lastReading.windDirection);
-        station.windChill = StationAnalytics.windChill(station.latestTempC, station.latestWindSpeed);
+            //  Wind
+            station.beaufort = StationAnalytics.windSpeedToBeaufort(lastReading.windSpeed);
+            station.latestWindSpeed = lastReading.windSpeed;
+            station.latestWindDirection = StationAnalytics.degreesToWindDirection(lastReading.windDirection);
+            station.windChill = StationAnalytics.windChill(station.latestTempC, station.latestWindSpeed);
+            station.beaufortLabel = StationAnalytics.beaufortToBeaufortLabel(station.readings.size() - 1);
+            station.maxWindSpeed = StationAnalytics.maxWindSpeed(station.readings);
+            station.minWindSpeed = StationAnalytics.minWindSpeed(station.readings);
 
-        station.beaufortLabel = StationAnalytics.beaufortToBeaufortLabel(station.readings.size() - 1);
-        station.latestPressure = lastReading.pressure;
+            //  Pressure
+            station.latestPressure = lastReading.pressure;
+        }
 
         render("station.html", station);
     }

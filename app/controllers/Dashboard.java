@@ -40,7 +40,7 @@ public class Dashboard extends Controller
   }
 
   public static int windSpeedToBeaufort(int windSpeed){
-//        double windSpeed = readings.windSpeed;
+
     int beaufort = 0;
 
     if (windSpeed == 1)

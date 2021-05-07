@@ -1,8 +1,11 @@
 package utils;
 
+import models.Reading;
+
 import java.util.HashMap;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class StationAnalytics {
 
@@ -147,4 +150,23 @@ public class StationAnalytics {
         return df.format(result);
     }
 
+    public static double maxWindSpeed(List<Reading> readings){
+        double max = 0;
+        for (Reading reading : readings){
+            if (reading.windSpeed > max){
+                max = reading.windSpeed;
+            }
+        }
+        return max;
+    }
+
+    public static double minWindSpeed(List<Reading> readings){
+        double min = readings.get(0).windSpeed;
+        for (Reading reading : readings){
+            if (reading.windSpeed < min){
+                min = reading.windSpeed;
+            }
+        }
+        return min;
+    }
 }
