@@ -1,45 +1,43 @@
 package controllers;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import models.Member;
+import models.Reading;
 import models.Station;
 import play.Logger;
 import play.mvc.Controller;
 
-public class Dashboard extends Controller
-{
-  public static void index()
-  {
+public class Dashboard extends Controller {
+  public static void index() {
     Logger.info("Rendering Dashboard");
     Member member = Accounts.getLoggedInMember();
     List<Station> stations = member.stations;
 
-    render ("dashboard.html", stations);
+    render("dashboard.html", stations);
   }
 
-  public static void deleteStation (Long id)
-  {
+  public static void deleteStation(Long id) {
     Member member = Accounts.getLoggedInMember();
     Station station = Station.findById(id);
     Logger.info("Deleting Station " + station.name);
     member.stations.remove(station);
     member.save();
     station.delete();
-    redirect ("/dashboard");
+    redirect("/dashboard");
   }
 
-  public static void addStation (String name)
-  {
+  public static void addStation(String name) {
     Member member = Accounts.getLoggedInMember();
     Station station = new Station(name);
     member.stations.add(station);
     Logger.info("Adding a Station: " + station.name);
     member.save();
-    redirect ("/dashboard");
+    redirect("/dashboard");
   }
 
-  public static int windSpeedToBeaufort(int windSpeed){
+  public static int windSpeedToBeaufort(int windSpeed) {
 
     int beaufort = 0;
 
@@ -70,4 +68,89 @@ public class Dashboard extends Controller
 
     return beaufort;
   }
+
+//  public static byte getTrend(List<Reading> readings, String weatherCondition){
+//    // 0 = Decreasing, 1 = Steady, 2 = Increasing
+//    byte trendDirection = 1;
+//
+//
+//    for (Reading reading : readings)
+//      if reading.
+//
+//  }
+
+//  public static byte getTempTrend(List<Reading> readings){
+//    // 0 = Decreasing, 1 = Steady, 2 = Increasing
+//    byte trendDirection = 1;
+//
+//    if (readings.size() > 2) {
+//      if (readings.get(0).temperature > readings.get(1).temperature) {
+//        if (readings.get(1).temperature > readings.get(2).temperature) {
+//          trendDirection = 2;
+//        }
+//      }
+//      if (readings.get(0).temperature < readings.get(1).temperature) {
+//        if (readings.get(1).temperature < readings.get(2).temperature) {
+//          trendDirection = 0;
+//        }
+//      }
+//    }
+//    return trendDirection;
+//  }
+
+  public static String getTempTrend(List<Reading> readings) {
+    String trendDirection = null;
+
+    if (readings.size() > 3) {
+      if (readings.get(readings.size() - 1).temperature > readings.get(readings.size() - 2).temperature) {
+        if (readings.get(readings.size() - 2).temperature > readings.get(readings.size() - 3).temperature) {
+          trendDirection = "arrow up";
+        }
+      }
+      if (readings.get(readings.size() - 1).temperature < readings.get(readings.size() - 2).temperature) {
+        if (readings.get(readings.size() - 2).temperature < readings.get(readings.size() - 3).temperature) {
+          trendDirection = "arrow down";
+        }
+      }
+    }
+    return trendDirection;
+  }
+
+  public static String getWindTrend(List<Reading> readings) {
+    String trendDirection = null;
+
+    if (readings.size() > 3) {
+      if (readings.get(readings.size() - 1).windSpeed > readings.get(readings.size() - 2).windSpeed) {
+        if (readings.get(readings.size() - 2).windSpeed > readings.get(readings.size() - 3).windSpeed) {
+          trendDirection = "arrow up";
+        }
+      }
+      if (readings.get(readings.size() - 1).windSpeed < readings.get(readings.size() - 2).windSpeed) {
+        if (readings.get(readings.size() - 2).windSpeed < readings.get(readings.size() - 3).windSpeed) {
+          trendDirection = "arrow down";
+        }
+      }
+    }
+    return trendDirection;
+  }
+
+  public static String getPressureTrend(List<Reading> readings) {
+    String trendDirection = null;
+
+    if (readings.size() > 3) {
+      if (readings.get(readings.size() - 1).pressure > readings.get(readings.size() - 2).pressure) {
+        if (readings.get(readings.size() - 2).pressure > readings.get(readings.size() - 3).pressure) {
+          trendDirection = "arrow up";
+        }
+      }
+      if (readings.get(readings.size() - 1).pressure < readings.get(readings.size() - 2).pressure) {
+        if (readings.get(readings.size() - 2).pressure < readings.get(readings.size() - 3).pressure) {
+          trendDirection = "arrow down";
+        }
+      }
+    }
+    return trendDirection;
+  }
+
 }
+
