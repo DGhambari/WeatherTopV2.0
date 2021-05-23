@@ -2,12 +2,10 @@ package controllers;
 
 import models.Station;
 import models.Reading;
-
 import play.Logger;
 import play.mvc.Controller;
-import utils.StationAnalytics;
+import utils.Analytics;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class StationCtrl extends Controller {
@@ -20,31 +18,31 @@ public class StationCtrl extends Controller {
       Reading lastReading = station.readings.get(station.readings.size() - 1);
 
       //  Weather
-      station.latestWeatherCondition = StationAnalytics.weatherCode(lastReading.code);
-      station.weatherIcon = StationAnalytics.weatherIcon(lastReading.code);
+      station.latestWeatherCondition = Analytics.weatherCode(lastReading.code);
+      station.weatherIcon = Analytics.weatherIcon(lastReading.code);
 
       //  Temp
       station.latestTempC = lastReading.temperature;
-      station.latestTempF = StationAnalytics.celsiusToFahrenheit(lastReading.temperature);
-      station.maxTemp = (double) StationAnalytics.getMaxReadings(station.readings).get(0);
-      station.minTemp = (double) StationAnalytics.getMinReadings(station.readings).get(0);
+      station.latestTempF = Analytics.celsiusToFahrenheit(lastReading.temperature);
+      station.maxTemp = (double) Analytics.getMaxReadings(station.readings).get(0);
+      station.minTemp = (double) Analytics.getMinReadings(station.readings).get(0);
       station.tempTrend = Dashboard.getTempTrend(station.readings);
 
       //  Wind
-      station.beaufort = StationAnalytics.windSpeedToBeaufort(lastReading.windSpeed);
+      station.beaufort = Analytics.windSpeedToBeaufort(lastReading.windSpeed);
       station.latestWindSpeed = lastReading.windSpeed;
-      station.latestWindDirection = StationAnalytics.degreesToWindDirection(lastReading.windDirection);
-      station.windChill = StationAnalytics.windChill(station.latestTempC, station.latestWindSpeed);
-      station.beaufortLabel = StationAnalytics.beaufortToBeaufortLabel(station.readings.size() - 1);
-      station.maxWindSpeed = (double) StationAnalytics.getMaxReadings(station.readings).get(1);
-      station.minWindSpeed = (double) StationAnalytics.getMinReadings(station.readings).get(1);
+      station.latestWindDirection = Analytics.degreesToWindDirection(lastReading.windDirection);
+      station.windChill = Analytics.windChill(station.latestTempC, station.latestWindSpeed);
+      station.beaufortLabel = Analytics.beaufortToBeaufortLabel(station.readings.size() - 1);
+      station.maxWindSpeed = (double) Analytics.getMaxReadings(station.readings).get(1);
+      station.minWindSpeed = (double) Analytics.getMinReadings(station.readings).get(1);
       station.windTrend = Dashboard.getWindTrend(station.readings);
 
       //  Pressure
       station.latestPressure = lastReading.pressure;
-      station.maxPressure = (double) StationAnalytics.getMaxReadings(station.readings).get(2);
-      station.minPressure = (double) StationAnalytics.getMinReadings(station.readings).get(2);
-      station.pressureTrend = Dashboard.getWindTrend(station.readings);
+      station.maxPressure = (double) Analytics.getMaxReadings(station.readings).get(2);
+      station.minPressure = (double) Analytics.getMinReadings(station.readings).get(2);
+      station.pressureTrend = Dashboard.getPressureTrend(station.readings);
     }
     render("station.html", station);
   }

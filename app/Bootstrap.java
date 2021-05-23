@@ -14,6 +14,5 @@ public class Bootstrap extends Job
     if (Reading.count() == 0) {
       Fixtures.loadModels("data.yml");
     }
-//    Fixtures.loadModels("data.yml");
   }
 }

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class StationAnalytics {
+public class Analytics {
 
   public static int windSpeedToBeaufort(double windSpeed) {
     int beaufort = 0;
