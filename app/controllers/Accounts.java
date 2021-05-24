@@ -49,4 +49,15 @@ public class Accounts extends Controller {
     }
     return member;
   }
+
+  public static void editDetails(String firstName, String lastName, String email, String password) {
+    Logger.info("Editing User Details");
+    Member member = Accounts.getLoggedInMember();
+    member.firstname = firstName;
+    member.lastname = lastName;
+    member.email = email;
+    member.password = password;
+    member.save();
+    redirect("/editmemberdetails");
+  }
 }

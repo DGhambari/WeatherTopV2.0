@@ -18,18 +18,15 @@ public class Dashboard extends Controller {
     for (int i = 0; i < stations.size(); i++) {
       if (stations.get(i).readings.size() > 0) {
         Reading lastReading = stations.get(i).readings.get(stations.get(i).readings.size() - 1);
-
         //  Weather
         stations.get(i).latestWeatherCondition = Analytics.weatherCode(lastReading.code);
         stations.get(i).weatherIcon = Analytics.weatherIcon(lastReading.code);
-
         //  Temp
         stations.get(i).latestTempC = lastReading.temperature;
         stations.get(i).latestTempF = Analytics.celsiusToFahrenheit(lastReading.temperature);
         stations.get(i).maxTemp = (double) Analytics.getMaxReadings(stations.get(i).readings).get(0);
         stations.get(i).minTemp = (double) Analytics.getMinReadings(stations.get(i).readings).get(0);
         stations.get(i).tempTrend = Dashboard.getTempTrend(stations.get(i).readings);
-
         //  Wind
         stations.get(i).beaufort = Analytics.windSpeedToBeaufort(lastReading.windSpeed);
         stations.get(i).latestWindSpeed = lastReading.windSpeed;
@@ -39,7 +36,6 @@ public class Dashboard extends Controller {
         stations.get(i).maxWindSpeed = (double) Analytics.getMaxReadings(stations.get(i).readings).get(1);
         stations.get(i).minWindSpeed = (double) Analytics.getMinReadings(stations.get(i).readings).get(1);
         stations.get(i).windTrend = Dashboard.getWindTrend(stations.get(i).readings);
-
         //  Pressure
         stations.get(i).latestPressure = lastReading.pressure;
         stations.get(i).maxPressure = (double) Analytics.getMaxReadings(stations.get(i).readings).get(2);
@@ -60,14 +56,14 @@ public class Dashboard extends Controller {
     redirect("/dashboard");
   }
 
-  public static void addStation(String name) {
-    Member member = Accounts.getLoggedInMember();
-    Station station = new Station(name);
-    member.stations.add(station);
-    Logger.info("Adding a Station: " + station.name);
-    member.save();
-    redirect("/dashboard");
-  }
+//  public static void addStation(String name) {
+//    Member member = Accounts.getLoggedInMember();
+//    Station station = new Station(name);
+//    member.stations.add(station);
+//    Logger.info("Adding a Station: " + station.name);
+//    member.save();
+//    redirect("/dashboard");
+//  }
 
   public static void addStation(String name, double latitude, double longitude) {
     Member member = Accounts.getLoggedInMember();

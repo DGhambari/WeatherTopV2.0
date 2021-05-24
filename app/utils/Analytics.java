@@ -80,6 +80,16 @@ public class Analytics {
     return beaufortLabel;
   }
 
+  public static String tempIcon(double temperatureC) {
+    String icon = "";
+    if (temperatureC >= 20) {
+      icon = "high";
+    } else {
+      icon = "low";
+    }
+    return icon;
+  }
+
   public static String degreesToWindDirection(double degrees) {
     String windDirection = "null";
 
@@ -122,9 +132,7 @@ public class Analytics {
   }
 
   public static String weatherCode(Integer code) {
-
     HashMap<Integer, String> weatherCode = new HashMap<>();
-
     weatherCode.put(100, "Clear");
     weatherCode.put(200, "Partial Clouds");
     weatherCode.put(300, "Cloudy");
@@ -133,14 +141,11 @@ public class Analytics {
     weatherCode.put(600, "Rain");
     weatherCode.put(700, "Snow");
     weatherCode.put(800, "Thunder");
-
     return weatherCode.get(code);
   }
 
   public static String weatherIcon(Integer code) {
-
     HashMap<Integer, String> weatherIcon = new HashMap<>();
-
     weatherIcon.put(100, "sun");
     weatherIcon.put(200, "cloud sun");
     weatherIcon.put(300, "cloud");
@@ -149,14 +154,11 @@ public class Analytics {
     weatherIcon.put(600, "cloud rain");
     weatherIcon.put(700, "snowflake");
     weatherIcon.put(800, "bolt");
-
     return weatherIcon.get(code);
   }
 
   public static String tempIcon(Integer code) {
-
     HashMap<Integer, String> tempIcon = new HashMap<>();
-
     tempIcon.put(100, "sun");
     tempIcon.put(200, "cloud sun");
     tempIcon.put(300, "cloud");
@@ -165,7 +167,6 @@ public class Analytics {
     tempIcon.put(600, "cloud rain");
     tempIcon.put(700, "snowflake");
     tempIcon.put(800, "bolt");
-
     return tempIcon.get(code);
   }
 
@@ -184,31 +185,10 @@ public class Analytics {
     return df.format(result);
   }
 
-//    public static double maxWindSpeed(List<Reading> readings){
-//        double max = 0;
-//        for (Reading reading : readings){
-//            if (reading.windSpeed > max){
-//                max = reading.windSpeed;
-//            }
-//        }
-//        return max;
-//    }
-//
-//    public static double minWindSpeed(List<Reading> readings){
-//        double min = readings.get(0).windSpeed;
-//        for (Reading reading : readings){
-//            if (reading.windSpeed < min){
-//                min = reading.windSpeed;
-//            }
-//        }
-//        return min;
-//    }
-
   public static ArrayList getMaxReadings(List<Reading> readings) {
     double maxTemp = 0;
     double maxWind = 0;
     double maxPressure = 0;
-
     ArrayList maxReadings = new ArrayList<>();
     for (Reading reading : readings) {
       if (reading.temperature > maxTemp) {

@@ -16,18 +16,16 @@ public class StationCtrl extends Controller {
 
     if (station.readings.size() > 0) {
       Reading lastReading = station.readings.get(station.readings.size() - 1);
-
       //  Weather
       station.latestWeatherCondition = Analytics.weatherCode(lastReading.code);
       station.weatherIcon = Analytics.weatherIcon(lastReading.code);
-
       //  Temp
       station.latestTempC = lastReading.temperature;
       station.latestTempF = Analytics.celsiusToFahrenheit(lastReading.temperature);
       station.maxTemp = (double) Analytics.getMaxReadings(station.readings).get(0);
       station.minTemp = (double) Analytics.getMinReadings(station.readings).get(0);
       station.tempTrend = Dashboard.getTempTrend(station.readings);
-
+      station.tempIcon = Analytics.tempIcon(lastReading.temperature);
       //  Wind
       station.beaufort = Analytics.windSpeedToBeaufort(lastReading.windSpeed);
       station.latestWindSpeed = lastReading.windSpeed;
@@ -37,7 +35,6 @@ public class StationCtrl extends Controller {
       station.maxWindSpeed = (double) Analytics.getMaxReadings(station.readings).get(1);
       station.minWindSpeed = (double) Analytics.getMinReadings(station.readings).get(1);
       station.windTrend = Dashboard.getWindTrend(station.readings);
-
       //  Pressure
       station.latestPressure = lastReading.pressure;
       station.maxPressure = (double) Analytics.getMaxReadings(station.readings).get(2);

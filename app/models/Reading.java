@@ -21,7 +21,6 @@ public class Reading extends Model {
   public Instant i;
 
   public Reading(int code, double temperature, double windSpeed, int windDirection, int pressure) {
-
     this.code = code;
     this.temperature = temperature;
     this.windSpeed = windSpeed;
