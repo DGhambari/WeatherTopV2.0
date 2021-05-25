@@ -157,18 +157,18 @@ public class Analytics {
     return weatherIcon.get(code);
   }
 
-  public static String tempIcon(Integer code) {
-    HashMap<Integer, String> tempIcon = new HashMap<>();
-    tempIcon.put(100, "sun");
-    tempIcon.put(200, "cloud sun");
-    tempIcon.put(300, "cloud");
-    tempIcon.put(400, "cloud sun rain");
-    tempIcon.put(500, "cloud showers heavy");
-    tempIcon.put(600, "cloud rain");
-    tempIcon.put(700, "snowflake");
-    tempIcon.put(800, "bolt");
-    return tempIcon.get(code);
-  }
+//  public static String tempIcon(Integer code) {
+//    HashMap<Integer, String> tempIcon = new HashMap<>();
+//    tempIcon.put(100, "sun");
+//    tempIcon.put(200, "cloud sun");
+//    tempIcon.put(300, "cloud");
+//    tempIcon.put(400, "cloud sun rain");
+//    tempIcon.put(500, "cloud showers heavy");
+//    tempIcon.put(600, "cloud rain");
+//    tempIcon.put(700, "snowflake");
+//    tempIcon.put(800, "bolt");
+//    return tempIcon.get(code);
+//  }
 
   public static double celsiusToFahrenheit(double temperatureC) {
     return ((temperatureC * (1.8)) + 32);

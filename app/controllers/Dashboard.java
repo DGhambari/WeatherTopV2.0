@@ -27,6 +27,7 @@ public class Dashboard extends Controller {
         stations.get(i).maxTemp = (double) Analytics.getMaxReadings(stations.get(i).readings).get(0);
         stations.get(i).minTemp = (double) Analytics.getMinReadings(stations.get(i).readings).get(0);
         stations.get(i).tempTrend = Dashboard.getTempTrend(stations.get(i).readings);
+        stations.get(i).tempIcon = Analytics.tempIcon(lastReading.temperature);
         //  Wind
         stations.get(i).beaufort = Analytics.windSpeedToBeaufort(lastReading.windSpeed);
         stations.get(i).latestWindSpeed = lastReading.windSpeed;
